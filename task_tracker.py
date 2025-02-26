@@ -2,8 +2,6 @@ import argparse #this is to handle command line arguments
 import json #this is to read/write JSON files
 import os #this is to check file existence
 from datetime import datetime   #for timestamps
-from pickletools import string1
-from wsgiref.validate import header_re
 
 """logically the first thing we want to do is check if a json file exists and
     if it does we load it and if not we start with an empty list.
@@ -29,26 +27,24 @@ def save_tasks(tasks):
         json.dump(tasks, j, indent=4) #uses json.dump() to write the tasks list to the file with 4-space indentation
 
 def add_task():
-    # 1. Load the existing tasks and store in a variable
-    tasks = load_tasks()  # tasks is now a list of existing task dictionaries
+    #Loading the existing tasks and store in a variable
+    tasks = load_tasks()  #tasks is now a list of existing task dictionaries
 
-    # 2. Determine the new task's ID
-    if not tasks:  # if the list is empty
+    if not tasks:  #if the list is empty( python uses if not list to check (boolean)
         new_id = 1
     else:
-        # Extract the IDs from the tasks and set new_id to max(existing IDs) + 1
+        #Extract the IDs from the tasks and set new_id to max(existing IDs) + 1
         new_id = max(task['id'] for task in tasks) + 1
 
-    # 3. Gather task details:
-    #    a. Get the task description (this could come from a function parameter or user input)
-    description = input("Enter task description: ")  # e.g., input("Enter task description: ")
-    #    b. Set a default status, e.g., "todo"
-    status = "todo"
-    #    c. Generate timestamps for creation and last update
-    created_at = datetime.now().isoformat()
-    updated_at = created_at  # Initially, updatedAt is the same as createdAt
 
-    # 4. Create the new task object (dictionary) with all necessary fields
+    description = input("Enter task description: ")
+    #Set a default status
+    status = "todo"
+    #Generate timestamps for creation and last update
+    created_at = datetime.now().isoformat()
+    updated_at = created_at  #Initially the updatedAt is the same as createdAt
+
+    #Creating the new task object ( a dictionary) with all necessary fields which then is added to list
     new_task = {
         "id": new_id,
         "description": description,
@@ -57,13 +53,12 @@ def add_task():
         "updatedAt": updated_at
     }
 
-    # 5. Append the new task to the list of tasks
+    #Appending the new task to the list of tasks
     tasks.append(new_task)
 
-    # 6. Save the updated tasks list to the JSON file
+    #Saving the updated tasks list to the JSON file
     save_tasks(tasks)
 
-    # (Optional) Provide feedback
+    #Provide feedback
     print(f"Task added successfully with ID: {new_id}")
-
 
