@@ -62,3 +62,20 @@ def add_task():
     #Provide feedback
     print(f"Task added successfully with ID: {new_id}")
 
+
+def update_task():
+    tasks = load_tasks()
+
+    task_id_input = input("Enter the ID of the task to update: ")
+    task_id = int(task_id_input)
+
+    for task in tasks:
+        if task['id'] == task_id:
+            new_description = input("Enter the new description: ")
+            task['description'] = new_description
+            task['updatedAt'] = datetime.now().isoformat()
+            save_tasks(tasks)
+            print(f"Task {task_id} updated successfully!")
+            return
+    #If no task with the given ID was found, print an error message
+    print(f"Task with ID {task_id} not found.")

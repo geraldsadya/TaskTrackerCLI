@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+
+int main(){
+    //declare and initialise variables
+    std::string line;
+    int line_count=0;
+    int word_count=0;
+    int letter_count=0;
+    int letter_freq[26] = {0};
+
+
+    while(std::getline(std::cin, line)){
+        line_count++;
+
+        std::stringstream ss(line);
+        std::string word;
+
+        while(ss>>word){
+            bool has_letter = false;
+            //for each and every word we need to see if its an actual letter to consider it a word
+            for(size_t i=0; i<word.length();i++){
+                char c = word[i];
+                if( (c >='A' && c<='Z') || (c>='a' && c<='z')){
+                    has_letter = true;//its an actual letter
+                    letter_count++;// so we have to increment the count
+                    //now we convert each letter to lower case before adding them to the array
+                    if(c >='A' && c<='Z'){
+                       // c = c + 32;
+                        c = c + ('a' - 'A');
+                    }
+                    //then we increment frequency of the letter at that position
+                    letter_freq[c - 'a']++;
+
+                }
+            }
+            if(has_letter){
+                word_count++;
+            }
+
+        }
+    }
+
+
+//now here i print the counts
+    std::cout << line_count << word_count << letter_count;
+    std::cout << " [ ";
+
+    for(int i=0; i<26<i++){
+        if(letter_frequency >0){
+            std::cout << char('a'+i) <<":" <<letter_freq[i]<< " ]"<<std::endl;
+        }
+    }
+
+
+
+
+    return 0;
+}
