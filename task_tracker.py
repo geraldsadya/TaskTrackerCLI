@@ -11,7 +11,6 @@ from datetime import datetime   #for timestamps
 TASKS_FILE = 'tasks.json'
 
 #function to load tasks
-
 def load_tasks():
     if not os.path.exists(TASKS_FILE): #os method used here don't worry if you don't know it for now
         return [] #if the file does not exist we will return an empty array
@@ -22,9 +21,50 @@ def load_tasks():
         except json.JSONDecodeError:
             return []
 
+
+#Function to save the tasks list to the JSON file
 def save_tasks(tasks):
-    with open(TASKS_FILE, 'w+') as j: #used w since it allows to write
-        json.dump(tasks, j, indent=4) #uses json.dump() to write the tasks list to the file with 4-space indentation
+    with open(TASKS_FILE, 'w+') as j:  #Open (or create) the file in write mode
+        json.dump(tasks, j, indent=4)  #Write the tasks list to the file with 4-space indentation
+
+
+# Function to add a new task
+def add_task(description=None):
+    tasks = load_tasks()  #'tasks' is now a list of existing task dictionaries
+
+    if not tasks:  #If the list is empty, set the new ID to 1
+        new_id = 1
+    else:
+        #extract all IDs and set new_id to the maximum existing ID + 1
+        new_id = max(task['id'] for task in tasks) + 1
+
+    if description is None:
+        description = input("Enter task description: ")
+
+    #Set the default status for a new task to todo
+    status = "todo"
+
+    #Generate timestamps for creation and last update (both initially the same)
+    created_at = datetime.now().isoformat()
+    updated_at = created_at
+
+    #Create the new task object (dictionary) with all necessary fields then this will be added to the list
+    new_task = {
+        "id": new_id,
+        "description": description,
+        "status": status,
+        "createdAt": created_at,
+        "updatedAt": updated_at
+    }
+
+    #Append the new task to the list of tasks
+    tasks.append(new_task)
+
+    # Save the updated tasks list to the JSON file
+    save_tasks(tasks)
+
+    # Provide feedback to the user that the task was added successfully
+    print(f"Task added successfully with ID: {new_id}")
 
 def add_task(description=None):
     tasks = load_tasks()
@@ -80,9 +120,9 @@ def delete_task(task_id=None):
 
 def mark_in_progress(task_id=None):
     tasks = load_tasks()
+
     if task_id is None:
         task_id = int(input("Enter the ID of the task to mark as in-progress: "))
-
     for task in tasks:
         if task['id'] == task_id:
             task['status'] = "in-progress"
@@ -129,28 +169,28 @@ def main():
     parser = argparse.ArgumentParser(description="Task Tracker CLI")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    # Add command
+    #Add command
     add_parser = subparsers.add_parser("add", help="Add a new task")
     add_parser.add_argument("description", nargs="?", help="Description of the new task")
 
-    # Update command
+    #Update command
     update_parser = subparsers.add_parser("update", help="Update an existing task")
     update_parser.add_argument("id", type=int, help="ID of the task to update")
     update_parser.add_argument("description", nargs="?", help="New description for the task")
 
-    # Delete command
+    #Delete command
     delete_parser = subparsers.add_parser("delete", help="Delete a task")
     delete_parser.add_argument("id", type=int, help="ID of the task to delete")
 
-    # Mark in-progress command
+    #Mark in-progress command
     mark_in_progress_parser = subparsers.add_parser("mark-in-progress", help="Mark a task as in-progress")
     mark_in_progress_parser.add_argument("id", type=int, nargs="?", help="ID of the task to mark as in-progress")
 
-    # Mark done command
+    #Mark done command
     mark_done_parser = subparsers.add_parser("mark-done", help="Mark a task as done")
     mark_done_parser.add_argument("id", type=int, nargs="?", help="ID of the task to mark as done")
 
-    # List command
+    #List command
     list_parser = subparsers.add_parser("list", help="List tasks")
     list_parser.add_argument("status", nargs="?", choices=["todo", "in-progress", "done"], help="Filter tasks by status")
 
