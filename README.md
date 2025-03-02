@@ -1,6 +1,7 @@
 # 📝 Task Tracker CLI
 
- ![preview](https://github.com/user-attachments/assets/f1a3706b-9621-4971-b7c6-def6a4d5ed87)
+ ![preview](https://github.com/user-attachments/assets/9d1cf46f-fb81-4486-8e0a-a3480753ba18)
+
 
 *A simple Python CLI tool to manage tasks using a JSON file.*
 
