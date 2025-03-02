@@ -83,8 +83,8 @@ python task_tracker.py list in-progress
 
 ## 🧑‍💻 Author
 **Gerald Sadya**  
-📧 [Your Email Here]  
-🔗 [Your LinkedIn Here]  
+📧 sadyageralm@gmail.com 
+🔗 https://www.linkedin.com/in/gerald-s-4a9886298/  
 
 ## 🤝 Contributing
 Feel free to fork the repository and submit pull requests with improvements!
