@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "description": "Study for 3022 and assignment",
+        "status": "in-progress",
+        "createdAt": "2025-03-02T15:44:58.994681",
+        "updatedAt": "2025-03-02T16:56:45.077803"
+    },
+    {
+        "id": 2,
+        "description": "Study for exams",
+        "status": "todo",
+        "createdAt": "2025-03-02T16:35:08.893344",
+        "updatedAt": "2025-03-02T16:35:08.893344"
+    },
+    {
+        "id": 3,
+        "description": "Study for exams",
+        "status": "todo",
+        "createdAt": "2025-03-02T16:36:06.882350",
+        "updatedAt": "2025-03-02T16:36:06.882350"
+    }
+]
